@@ -1,3 +1,27 @@
+/**
+ * @typedef {object} Categoria
+ * @property {string} slug
+ * @property {string} nombre
+ * @property {string} descripcion
+ * @property {string} imagen
+ * @property {string} enlace
+ * @property {string} icono
+ */
+
+/**
+ * @typedef {object} Producto
+ * @property {string} id
+ * @property {string} nombre
+ * @property {string} categoria
+ * @property {string} precio
+ * @property {string} [precioAntes]
+ * @property {string} [cuotas]
+ * @property {string} imagen
+ * @property {string} [alt]
+ * @property {string} [etiqueta]
+ */
+
+/** @type {Categoria[]} */
 export const categorias = [
   {
     slug: "placas",
@@ -49,6 +73,7 @@ export const categorias = [
   },
 ];
 
+/** @type {Record<string, Producto[]>} */
 const productosPorCategoria = {
   placas: [
     {
@@ -204,6 +229,7 @@ imagen: "/assets/img/teclado-rgb.jpg",
   ],
 };
 
+/** @type {Producto} */
 export const productoDestacado = {
   id: "destacado-armado-pc",
   nombre: "Armado de PC a medida",
@@ -214,23 +240,31 @@ export const productoDestacado = {
   etiqueta: "Servicio",
 };
 
+/** @param {string} slug @returns {Producto[]} */
 export function productosDeCategoria(slug) {
   return productosPorCategoria[slug] ?? [];
 }
 
+/** @returns {Categoria[]} */
 export function todasLasCategorias() {
   return categorias;
 }
 
+/** @param {string} precio @returns {number} */
 export function precioANumero(precio) {
   if (typeof precio !== "string") return 0;
   return Number(precio.replace(/[^0-9]/g, "")) || 0;
 }
 
+/** @param {number} numero @returns {string} */
 export function numeroAPrecio(numero) {
   return "$" + Number(numero || 0).toLocaleString("es-AR");
 }
 
+/**
+ * @param {string} id
+ * @returns {{ producto: Producto, categoria: Categoria } | undefined}
+ */
 export function buscarProducto(id) {
   for (const categoria of categorias) {
     const producto = productosDeCategoria(categoria.slug).find((p) => p.id === id);

@@ -1,3 +1,12 @@
+/**
+ * @typedef {object} DetalleProducto
+ * @property {string} descripcion
+ * @property {{ etiqueta: string, valor: string }[]} especificaciones
+ * @property {boolean} preventa
+ * @property {string} entrega
+ */
+
+/** @type {Record<string, DetalleProducto>} */
 export const detalleProductos = {
   "placa-rtx4090": {
     descripcion:
@@ -222,6 +231,7 @@ export const detalleProductos = {
   },
 };
 
+/** @param {string} id @returns {DetalleProducto} */
 export function detalleDe(id) {
   return (
     detalleProductos[id] ?? {

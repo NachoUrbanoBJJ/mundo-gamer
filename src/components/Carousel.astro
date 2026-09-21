@@ -17,7 +17,9 @@ const { slides } = Astro.props;
 <div class="carousel" data-carousel>
   <div class="carousel__track" data-carousel-track>
     {
-      slides.map(({ imagen, alt, badge, titulo, cta }, indice) => (
+      slides.map(({ imagen, alt, badge, titulo, cta }, indice) => {
+        const imagenMovil = imagen.replace(/\.jpg$/, "-960w.jpg");
+        return (
         <div
           class="carousel__diapositiva"
           id={`carousel-diapositiva-${indice + 1}`}
@@ -27,9 +29,12 @@ const { slides } = Astro.props;
           <img
             class="carousel__slide"
             src={imagen}
+            srcset={`${imagenMovil} 960w, ${imagen} 1920w`}
+            sizes="100vw"
             alt={alt}
             width="1920"
             height="576"
+            decoding="async"
             fetchpriority={indice === 0 ? "high" : undefined}
           />
           <div class="carousel__contenido">
@@ -44,7 +49,8 @@ const { slides } = Astro.props;
             </div>
           </div>
         </div>
-      ))
+        );
+      })
     }
   </div>
 
@@ -71,14 +77,16 @@ const { slides } = Astro.props;
 <script>
   const carrusel = document.querySelector("[data-carousel]");
   if (carrusel) {
-    const track = carrusel.querySelector("[data-carousel-track]");
-    const botonAnterior = carrusel.querySelector("[data-carousel-anterior]");
-    const botonSiguiente = carrusel.querySelector("[data-carousel-siguiente]");
-    const contenedorPuntos = carrusel.querySelector("[data-carousel-puntos]");
+    const iniciar = () => {
+    const track = carrusel.querySelector<HTMLElement>("[data-carousel-track]");
+    const botonAnterior = carrusel.querySelector<HTMLButtonElement>("[data-carousel-anterior]");
+    const botonSiguiente = carrusel.querySelector<HTMLButtonElement>("[data-carousel-siguiente]");
+    const contenedorPuntos = carrusel.querySelector<HTMLElement>("[data-carousel-puntos]");
+    if (!track || !botonAnterior || !botonSiguiente || !contenedorPuntos) return;
     const total = track.children.length;
     let indice = 0;
 
-    const puntos = [];
+    const puntos: HTMLButtonElement[] = [];
     for (let i = 0; i < total; i += 1) {
       const punto = document.createElement("button");
       punto.type = "button";
@@ -92,11 +100,12 @@ const { slides } = Astro.props;
     }
 
     function actualizar() {
-      track.style.transform = `translateX(-${indice * 100}%)`;
-      Array.from(track.children).forEach((diapositiva, i) => {
-        diapositiva.classList.toggle("activo", i === indice);
-        diapositiva.inert = i !== indice;
-        diapositiva.setAttribute("aria-hidden", i === indice ? "false" : "true");
+      track!.style.transform = `translateX(-${indice * 100}%)`;
+      Array.from(track!.children).forEach((diapositiva, i) => {
+        const elemento = diapositiva as HTMLElement;
+        elemento.classList.toggle("activo", i === indice);
+        elemento.inert = i !== indice;
+        elemento.setAttribute("aria-hidden", i === indice ? "false" : "true");
       });
       puntos.forEach((punto, i) => {
         punto.classList.toggle("activo", i === indice);
@@ -105,13 +114,13 @@ const { slides } = Astro.props;
       });
     }
 
-    function moverA(nuevoIndice) {
+    function moverA(nuevoIndice: number) {
       indice = (nuevoIndice + total) % total;
       actualizar();
       reiniciarAvanzador();
     }
 
-    let avanzador = null;
+    let avanzador: number | null = null;
 
     function reiniciarAvanzador() {
       if (avanzador) window.clearInterval(avanzador);
@@ -128,5 +137,7 @@ const { slides } = Astro.props;
 
     actualizar();
     reiniciarAvanzador();
+    };
+    iniciar();
   }
 </script>

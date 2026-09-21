@@ -92,7 +92,7 @@ gpu: {
   },
 };
 
-const icono = iconos[nombre] ?? null;
+const icono = iconos[nombre as keyof typeof iconos] ?? null;
 ---
 
 {

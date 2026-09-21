@@ -127,14 +127,16 @@ import Base from "../layouts/Base.astro";
 </Base>
 
 <script>
-  const radios = Array.from(document.querySelectorAll("[name='auth-modo']"));
+  const radios = Array.from(
+    document.querySelectorAll<HTMLInputElement>("[name='auth-modo']")
+  );
 
   function actualizar() {
     const modo = radios.find((r) => r.checked)?.value ?? "entrar";
-    document.querySelectorAll("[data-auth-panel]").forEach((panel) => {
+    document.querySelectorAll<HTMLElement>("[data-auth-panel]").forEach((panel) => {
       panel.hidden = panel.dataset.authPanel !== modo;
     });
-    document.querySelectorAll(".auth-card__tabs label").forEach((label) => {
+    document.querySelectorAll<HTMLElement>(".auth-card__tabs label").forEach((label) => {
       const idRadio = modo === "entrar" ? "auth-entrar" : "auth-crear";
       label.setAttribute("aria-selected", String(label.getAttribute("for") === idRadio));
     });
@@ -142,7 +144,7 @@ import Base from "../layouts/Base.astro";
 
   radios.forEach((radio) => radio.addEventListener("change", actualizar));
 
-  document.querySelectorAll("[data-auth-cambiar]").forEach((boton) => {
+  document.querySelectorAll<HTMLButtonElement>("[data-auth-cambiar]").forEach((boton) => {
     boton.addEventListener("click", () => {
       const radio = radios.find((r) => r.id === `auth-${boton.dataset.authCambiar}`);
       if (radio) {
@@ -152,24 +154,27 @@ import Base from "../layouts/Base.astro";
     });
   });
 
-  document.querySelectorAll("[data-auth-form]").forEach((form) => {
+  document.querySelectorAll<HTMLFormElement>("[data-auth-form]").forEach((form) => {
     form.addEventListener("submit", (evento) => {
       evento.preventDefault();
-      const resultado = form.querySelector("[data-auth-resultado]");
-      const crear = form.closest("[data-auth-panel]").dataset.authPanel === "crear";
+      const resultado = form.querySelector<HTMLElement>("[data-auth-resultado]");
+      const panel = form.closest("[data-auth-panel]") as HTMLElement | null;
+      const crear = panel?.dataset.authPanel === "crear";
 
-      const contrasena = form.querySelector('[name="contrasena"]');
-      const confirmacion = form.querySelector('[name="contrasena2"]');
-      if (confirmacion && contrasena.value !== confirmacion.value) {
+      const contrasena = form.querySelector<HTMLInputElement>('[name="contrasena"]');
+      const confirmacion = form.querySelector<HTMLInputElement>('[name="contrasena2"]');
+      if (confirmacion && contrasena && contrasena.value !== confirmacion.value && resultado) {
         resultado.textContent = "Las contraseñas no coinciden.";
         resultado.classList.remove("is-ok");
         return;
       }
 
-      resultado.classList.add("is-ok");
-      resultado.textContent = crear
-        ? "¡Cuenta creada! (demo: la conexión real llegará con el backend)."
-        : "¡Sesión iniciada! (demo: la autenticación real llegará con el backend).";
+      if (resultado) {
+        resultado.classList.add("is-ok");
+        resultado.textContent = crear
+          ? "¡Cuenta creada! (demo: la conexión real llegará con el backend)."
+          : "¡Sesión iniciada! (demo: la autenticación real llegará con el backend).";
+      }
     });
   });
 

@@ -18,6 +18,19 @@ const {
 const sitio = Astro.site;
 const urlCanonica = new URL(Astro.url.pathname, sitio);
 const imagenOg = new URL("/assets/img/banner-gaming-setup.jpg", sitio);
+
+const datosEstructurados = JSON.stringify(
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Mundo Gamer",
+    description: "E-commerce de hardware y tecnología gaming. Sitio de demostración.",
+    inLanguage: "es-AR",
+    ...(sitio ? { url: sitio.origin } : {}),
+  },
+  null,
+  2
+);
 ---
 
 <!doctype html>
@@ -31,6 +44,15 @@ const imagenOg = new URL("/assets/img/banner-gaming-setup.jpg", sitio);
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    />
     <link rel="canonical" href={urlCanonica} />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Mundo Gamer" />
@@ -43,6 +65,7 @@ const imagenOg = new URL("/assets/img/banner-gaming-setup.jpg", sitio);
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={imagenOg} />
+    <script type="application/ld+json" set:html={datosEstructurados}></script>
     <title>{title}</title>
   </head>
   <body>

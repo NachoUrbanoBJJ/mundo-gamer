@@ -141,8 +141,8 @@ const redes = [
 </header>
 
 <script>
-  const toggle = document.getElementById("menu-toggle");
-  const boton = document.querySelector(".encabezado__hamburguesa");
+  const toggle = document.getElementById("menu-toggle") as HTMLInputElement | null;
+  const boton = document.querySelector<HTMLElement>(".encabezado__hamburguesa");
   if (toggle && boton) {
     const sincronizar = () => {
       const abierto = toggle.checked;
