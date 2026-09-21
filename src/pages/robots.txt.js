@@ -1,5 +1,5 @@
 export function GET() {
-  const base = (import.meta.env.SITE || "https://mundo-gamer.example.com").replace(
+  const base = (import.meta.env.SITE || "https://mundo-gamer.vercel.app").replace(
     /\/$/,
     ""
   );

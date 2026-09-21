@@ -116,4 +116,4 @@ Las fotos fuente viven en `img/`. Para regenerar los `banner-*.jpg` (1920×576, 
 
 Build estático: `npm run build` → carpeta `dist/` (funciona en Vercel, Netlify, Cloudflare Pages o GH Pages).
 
-> **Antes de publicar un dominio real**: actualizá `site` en `astro.config.mjs` (hoy apunta a `https://mundo-gamer.example.com` como placeholder) para que canonical, sitemap, Open Graph y JSON-LD usen la URL real.
+> **Sitio publicado**: `astro.config.mjs` apunta a `https://mundo-gamer.vercel.app` (deploy en Vercel). Si algún día se cambia de dominio, actualizá `site` para que canonical, sitemap, Open Graph y JSON-LD apunten a la URL nueva.
