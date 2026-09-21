@@ -1,4 +1,6 @@
 ---
+import { categorias } from "../data/catalogo.js";
+
 interface Props {
   nombre: string;
   categoria: string;
@@ -22,6 +24,9 @@ const {
   cuotas,
   enlace = "/productos",
 } = Astro.props;
+
+const nombreCategoria =
+  categorias.find((c) => c.slug === categoria)?.nombre ?? categoria;
 ---
 
 <article class="producto-card">
@@ -38,7 +43,7 @@ const {
       <img src={imagen} alt={alt} loading="lazy" width="400" height="300" />
     </div>
     <div class="producto-card__cuerpo">
-      <span class="producto-card__categoria">{categoria}</span>
+      <span class="producto-card__categoria">{nombreCategoria}</span>
       <h3 class="producto-card__nombre">{nombre}</h3>
       {precioAntes && <span class="producto-card__precio-antes">{precioAntes}</span>}
       {cuotas && <span class="producto-card__cuotas">{cuotas}</span>}

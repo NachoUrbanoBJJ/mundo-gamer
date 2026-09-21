@@ -17,7 +17,7 @@ const redes = [
   { nombre: "Facebook", url: "https://facebook.com", icono: "facebook" },
   { nombre: "X (Twitter)", url: "https://x.com", icono: "x" },
   { nombre: "Instagram", url: "https://instagram.com", icono: "instagram" },
-  { nombre: "WhatsApp", url: "https://wa.me/", icono: "whatsapp" },
+  { nombre: "WhatsApp", url: "https://wa.me/5491100000000", icono: "whatsapp" },
 ];
 ---
 
@@ -74,15 +74,23 @@ const redes = [
         type="checkbox"
         id="menu-toggle"
         class="encabezado__toggle"
-        aria-hidden="true"
+        tabindex="-1"
       />
-      <label for="menu-toggle" class="encabezado__hamburguesa" aria-label="Abrir menú">
+      <label
+        for="menu-toggle"
+        class="encabezado__hamburguesa"
+        role="button"
+        tabindex="0"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+        aria-controls="menu-navegacion"
+      >
         <span></span>
         <span></span>
         <span></span>
       </label>
 
-      <nav class="encabezado__menu" aria-label="Navegación principal">
+      <nav class="encabezado__menu" id="menu-navegacion" aria-label="Navegación principal">
         <ul>
           {
             enlaces.map(({ href, etiqueta }) => {
@@ -131,3 +139,24 @@ const redes = [
     </div>
   </div>
 </header>
+
+<script>
+  const toggle = document.getElementById("menu-toggle");
+  const boton = document.querySelector(".encabezado__hamburguesa");
+  if (toggle && boton) {
+    const sincronizar = () => {
+      const abierto = toggle.checked;
+      boton.setAttribute("aria-expanded", String(abierto));
+      boton.setAttribute("aria-label", abierto ? "Cerrar menú" : "Abrir menú");
+    };
+    toggle.addEventListener("change", sincronizar);
+    document.addEventListener("keydown", (evento) => {
+      if (evento.key === "Escape" && toggle.checked) {
+        toggle.checked = false;
+        sincronizar();
+        boton.focus();
+      }
+    });
+    sincronizar();
+  }
+</script>

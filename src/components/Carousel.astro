@@ -17,15 +17,20 @@ const { slides } = Astro.props;
 <div class="carousel" data-carousel>
   <div class="carousel__track" data-carousel-track>
     {
-      slides.map(({ imagen, alt, badge, titulo, cta }) => (
-        <div class="carousel__diapositiva">
+      slides.map(({ imagen, alt, badge, titulo, cta }, indice) => (
+        <div
+          class="carousel__diapositiva"
+          id={`carousel-diapositiva-${indice + 1}`}
+          inert={indice !== 0 ? "true" : undefined}
+          aria-hidden={indice !== 0 ? "true" : "false"}
+        >
           <img
             class="carousel__slide"
             src={imagen}
             alt={alt}
             width="1920"
             height="576"
-            fetchpriority="high"
+            fetchpriority={indice === 0 ? "high" : undefined}
           />
           <div class="carousel__contenido">
             <div class="carousel__interno">
@@ -77,6 +82,9 @@ const { slides } = Astro.props;
     for (let i = 0; i < total; i += 1) {
       const punto = document.createElement("button");
       punto.type = "button";
+      punto.setAttribute("role", "tab");
+      punto.setAttribute("id", `carousel-punto-${i + 1}`);
+      punto.setAttribute("aria-controls", `carousel-diapositiva-${i + 1}`);
       punto.setAttribute("aria-label", `Ir a la imagen ${i + 1}`);
       punto.addEventListener("click", () => moverA(i));
       contenedorPuntos.appendChild(punto);
@@ -87,8 +95,14 @@ const { slides } = Astro.props;
       track.style.transform = `translateX(-${indice * 100}%)`;
       Array.from(track.children).forEach((diapositiva, i) => {
         diapositiva.classList.toggle("activo", i === indice);
+        diapositiva.inert = i !== indice;
+        diapositiva.setAttribute("aria-hidden", i === indice ? "false" : "true");
       });
-      puntos.forEach((punto, i) => punto.classList.toggle("activo", i === indice));
+      puntos.forEach((punto, i) => {
+        punto.classList.toggle("activo", i === indice);
+        punto.setAttribute("aria-selected", String(i === indice));
+        punto.setAttribute("tabindex", i === indice ? "0" : "-1");
+      });
     }
 
     function moverA(nuevoIndice) {
