@@ -1,0 +1,43 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+.marquesina {
+  overflow: hidden;
+  background-color: $color-boton;
+  border-top: 1px solid rgba($color-naranja, 0.35);
+  border-bottom: 1px solid rgba($color-naranja, 0.35);
+
+  &__pista {
+    display: flex;
+    width: max-content;
+    animation: marquesina-desplazar 22s linear infinite;
+
+    &:hover {
+      animation-play-state: paused;
+    }
+  }
+
+  &__item {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    padding: 0.6rem 1.25rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: $color-naranja;
+
+    &::after {
+      content: "\2726";
+      margin-left: 2.5rem;
+      color: $color-primario;
+    }
+  }
+}
+
+@keyframes marquesina-desplazar {
+  to {
+    transform: translateX(-50%);
+  }
+}

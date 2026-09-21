@@ -1,0 +1,46 @@
+---
+import Base from "../layouts/Base.astro";
+import ProductCard from "../components/ProductCard.astro";
+import {
+  categorias,
+  productosDeCategoria,
+} from "../data/catalogo.js";
+---
+
+<Base
+  title="Productos | Mundo Gamer"
+  description="Descubrí todos los productos de Mundo Gamer: placas de video, monitores, memorias, discos y más."
+  currentRoute="/productos"
+>
+  <section class="seccion">
+    <div class="contenedor">
+      <h2 class="titulo-seccion">Nuestros <span>productos</span></h2>
+      <p class="subtitulo-seccion">Todo el catálogo, categoría por categoría</p>
+
+      {
+        categorias.map((categoria) => {
+          const productos = productosDeCategoria(categoria.slug);
+          return (
+            <section class="seccion">
+              <h2 class="titulo-seccion">
+                <a href={categoria.enlace}>{categoria.nombre}</a>
+              </h2>
+              <div class="producto-grid">
+                {
+                  productos
+                    .slice(0, 3)
+                    .map((producto) => (
+                      <ProductCard
+                        {...producto}
+                        enlace={`/productos/${producto.categoria}/${producto.id}`}
+                      />
+                    ))
+                }
+              </div>
+            </section>
+          );
+        })
+      }
+    </div>
+  </section>
+</Base>

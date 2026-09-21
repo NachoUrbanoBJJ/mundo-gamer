@@ -1,0 +1,82 @@
+@use "sass:color";
+@use "variables" as *;
+@use "mixins" as *;
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  &__campo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  &__etiqueta {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: $color-texto;
+  }
+
+  &__entrada {
+    width: 100%;
+    padding: 0.7rem 0.85rem;
+    border: 1px solid $color-borde;
+    border-radius: $radio-pequeno;
+    background-color: $color-superficie;
+    color: $color-texto;
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+    &::placeholder {
+      color: $color-texto-suave;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $color-primario;
+      box-shadow: 0 0 0 3px rgba($color-primario, 0.25);
+    }
+
+    &--error {
+      border-color: $color-error;
+    }
+
+    &[readonly] {
+      background-color: $color-fondo;
+      color: $color-texto-suave;
+      cursor: default;
+    }
+  }
+
+  textarea.formulario__entrada {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  &__mensaje-error {
+    font-size: 0.8rem;
+    color: $color-error;
+    min-height: 1em;
+  }
+
+  &__boton {
+    @include boton;
+    width: 100%;
+
+    &--secundario {
+      background-color: $color-nav;
+
+      &:hover {
+        background-color: color.scale($color-nav, $lightness: 15%);
+      }
+    }
+  }
+}
+
+.tarjeta {
+  @include tarjeta;
+  padding: 1.75rem;
+}

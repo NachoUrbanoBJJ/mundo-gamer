@@ -1,0 +1,18 @@
+@use "base";
+@use "layout";
+@use "header";
+@use "beneficios";
+@use "footer";
+@use "carousel";
+@use "marquesina";
+@use "cards";
+@use "forms";
+@use "botones";
+@use "paginas";
+@use "detalle";
+@use "carrito";
+@use "auth";
+
+@use "variables" as *;
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");

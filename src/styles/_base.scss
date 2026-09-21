@@ -1,0 +1,121 @@
+@use "variables" as *;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: $color-fondo;
+  color: $color-texto;
+  font-family: $fuente-principal;
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1.15;
+  color: $color-texto;
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  font-weight: 700;
+}
+
+h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+}
+
+h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+h4 {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+a {
+  color: $color-primario-oscuro;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+p {
+  margin-block: 0 1rem;
+}
+
+button {
+  font-family: inherit;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+::selection {
+  background-color: $color-primario;
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 3px solid rgba($color-primario, 0.45);
+  outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.titulo-seccion {
+  text-align: center;
+  margin: 0 0 0.5rem;
+
+  span {
+    color: $color-primario-oscuro;
+  }
+}
+
+.subtitulo-seccion {
+  text-align: center;
+  color: $color-texto-suave;
+  margin: 0 0 2rem;
+}
+
+.titulo-seccion--naranja span {
+  color: $color-naranja;
+}
+
+.texto-centrado {
+  text-align: center;
+}

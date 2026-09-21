@@ -1,0 +1,61 @@
+---
+import { categorias } from "../data/catalogo.js";
+import Icono from "./Icono.astro";
+
+const redes = [
+  { nombre: "Facebook", url: "https://facebook.com", icono: "facebook" },
+  { nombre: "X (Twitter)", url: "https://x.com", icono: "x" },
+  { nombre: "Instagram", url: "https://instagram.com", icono: "instagram" },
+  { nombre: "WhatsApp", url: "https://wa.me/", icono: "whatsapp" },
+];
+---
+
+<footer class="footer">
+  <div class="footer__contenido">
+    <div class="footer__columna">
+      <h3>Mundo Gamer</h3>
+      <p>
+        Tu tienda de referencia en hardware y tecnología gamer. Calidad,
+        pasión y la mejor atención al cliente.
+      </p>
+    </div>
+
+    <div class="footer__columna">
+      <h3>Categorías</h3>
+      <ul>
+        {
+          categorias.map(({ nombre, enlace }) => (
+            <li><a href={enlace}>{nombre}</a></li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="footer__columna">
+      <h3>Contacto</h3>
+      <ul>
+        <li><strong>Dirección:</strong> Avenida Siempre Viva 374</li>
+        <li><strong>Teléfono:</strong> 0800-888-3235</li>
+        <li><strong>Email:</strong> mimundo_gamer13@gmail.com</li>
+        <li><strong>Horario:</strong> Lun a Vie 9-18 · Sáb 9-13</li>
+      </ul>
+    </div>
+
+    <div class="footer__columna">
+      <h3>Redes sociales</h3>
+      <div class="footer__redes">
+        {
+          redes.map(({ nombre, url, icono }) => (
+            <a href={url} target="_blank" rel="noopener noreferrer" aria-label={nombre}>
+              <Icono nombre={icono} />
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="footer__copyright">
+    <p>&copy; 2026 Mundo Gamer. Todos los derechos reservados.</p>
+  </div>
+</footer>

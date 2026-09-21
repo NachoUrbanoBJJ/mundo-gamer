@@ -1,0 +1,56 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+.beneficios {
+  background-color: $color-superficie;
+  border-bottom: 1px solid $color-borde;
+
+  &__lista {
+    @include contenedor;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding-block: 2.25rem;
+
+    @include respond-to(sm) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include respond-to(md) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    svg {
+      flex: 0 0 auto;
+      width: 40px;
+      height: 40px;
+      padding: 8px;
+      border-radius: $radio-pequeno;
+      background-color: $color-primario-claro;
+      color: $color-primario-oscuro;
+      stroke: currentColor;
+    }
+
+    &--cuotas svg {
+      background-color: rgba($color-naranja, 0.15);
+      color: $color-naranja-oscuro;
+    }
+
+    strong {
+      display: block;
+      color: $color-texto;
+      font-size: 0.98rem;
+    }
+
+    span {
+      color: $color-texto-suave;
+      font-size: 0.88rem;
+    }
+  }
+}

@@ -1,0 +1,197 @@
+---
+import Base from "../layouts/Base.astro";
+import Icono from "../components/Icono.astro";
+
+const tituloSeccion = "Nosotros";
+const descripcion =
+  "Conocé la historia detrás de nuestra tienda: un sueño gamer que hoy llega a todo el país.";
+
+const opcionesEnvio = [
+  { opcion: "Envío estándar", monto: "$4.500" },
+  { opcion: "Envío express", monto: "$9.900" },
+  { opcion: "Envío internacional", monto: "$24.000" },
+];
+
+const montos = [4500, 9900, 24000];
+const promedioEnvio = Math.round(
+  montos.reduce((a, b) => a + b, 0) / montos.length,
+);
+
+const urlMapa =
+  "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3282.7559791136705!2d-58.36962721093694!3d-34.63560638940692!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95a334b6925e5473%3A0x1ca5b2748858b40d!2sEstadio%20Alberto%20J.%20Armando!5e0!3m2!1ses!2sar!4v1739493220610!5m2!1ses!2sar";
+
+const redes = [
+  { nombre: "Facebook", url: "https://facebook.com", icono: "facebook" },
+  { nombre: "X (Twitter)", url: "https://x.com", icono: "x" },
+  { nombre: "Instagram", url: "https://instagram.com", icono: "instagram" },
+  { nombre: "WhatsApp", url: "https://wa.me/", icono: "whatsapp" },
+];
+---
+
+<Base
+  title={`${tituloSeccion} | Mundo Gamer`}
+  description={descripcion}
+  currentRoute="/nosotros"
+>
+  <section class="seccion">
+    <div class="contenedor">
+      <div class="nosotros-intro" data-desplegar-historia>
+        <h2 class="nosotros-intro__titulo">{tituloSeccion}</h2>
+        <p class="nosotros-intro__quienes">
+          Un sueño de gaming que empezó en un garaje y hoy llega a todo el
+          país.
+        </p>
+
+        <div class="nosotros-intro__historia">
+          <div class="nosotros-intro__historia-inner">
+            <p>
+              Empezamos en 2013 vendiendo periféricos usados entre amigos del
+              barrio. Lo que era un pasatiempo se volvió un comercio, y ese
+              comercio se convirtió en lo que ves hoy.
+            </p>
+            <p>
+              Crecimos de a poco, con un único objetivo: que cualquiera pueda
+              armar su setup soñado sin vueltas ni costos escondidos.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="nosotros-grid">
+        <div class="tarjeta envio-promedio">
+          <div class="envio-promedio__cabecera">
+            <span class="envio-promedio__icono" aria-hidden="true">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="8" cy="18" r="2" />
+                <circle cx="16" cy="18" r="2" />
+                <path d="M3 6h13l3 6v6h-3" />
+                <path d="M3 18v-7" />
+              </svg>
+            </span>
+            <div>
+              <span class="envio-promedio__etiqueta">Costo promedio de envío</span>
+              <strong class="envio-promedio__monto">
+                ${promedioEnvio.toLocaleString("es-AR")}
+              </strong>
+            </div>
+          </div>
+          <ul class="envio-promedio__lista">
+            {
+              opcionesEnvio.map(({ opcion, monto }) => (
+                <li class="envio-promedio__opcion">
+                  <span>{opcion}</span>
+                  <strong>{monto}</strong>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <div class="tarjeta mapa-card">
+          <h2 class="mapa-card__titulo">Donde encontrarnos</h2>
+          <div class="mapa-card__mapa">
+            <iframe
+              src={urlMapa}
+              title="Mapa de ubicación"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </div>
+      </div>
+
+      <div class="nosotros-contacto">
+        <h2 class="titulo-seccion">Contacto</h2>
+        <p class="subtitulo-seccion">Escribinos por redes, te respondemos al toque</p>
+        <div class="redes-lista">
+          {
+            redes.map(({ nombre, url, icono }) => (
+              <a href={url} target="_blank" rel="noopener noreferrer">
+                <Icono nombre={icono} />
+                {nombre}
+              </a>
+            ))
+          }
+        </div>
+      </div>
+
+      <section class="seccion" id="contacto">
+        <div class="contenedor">
+          <h2 class="titulo-seccion">Dejanos tu mensaje</h2>
+          <h4 class="subtitulo-seccion">
+            Para un armado de pc, dejanos tu consulta para una atención personalizada.
+          </h4>
+          <div class="tarjeta formulario-card">
+            <form class="formulario" data-validacion novalidate>
+              <div class="formulario__campo">
+                <label class="formulario__etiqueta" for="contacto-nombre">Nombre</label>
+                <input
+                  id="contacto-nombre"
+                  name="nombre"
+                  type="text"
+                  class="formulario__entrada"
+                  autocomplete="name"
+                  required
+                />
+                <span class="formulario__mensaje-error" aria-live="polite"></span>
+              </div>
+              <div class="formulario__campo">
+                <label class="formulario__etiqueta" for="contacto-email">
+                  Correo electrónico
+                </label>
+                <input
+                  id="contacto-email"
+                  name="email"
+                  type="email"
+                  class="formulario__entrada"
+                  autocomplete="email"
+                  required
+                />
+                <span class="formulario__mensaje-error" aria-live="polite"></span>
+              </div>
+              <div class="formulario__campo">
+                <label class="formulario__etiqueta" for="contacto-mensaje">Mensaje</label>
+                <textarea
+                  id="contacto-mensaje"
+                  name="mensaje"
+                  class="formulario__entrada"
+                  required
+                ></textarea>
+                <span class="formulario__mensaje-error" aria-live="polite"></span>
+              </div>
+              <button type="submit" class="formulario__boton">Enviar consulta</button>
+              <span class="formulario__mensaje-error" data-mensaje-ok aria-live="polite"></span>
+            </form>
+          </div>
+        </div>
+      </section>
+    </div>
+  </section>
+</Base>
+
+<script>
+  import "../scripts/formularios.js";
+
+  const bloque = document.querySelector("[data-desplegar-historia]");
+  if (bloque) {
+    const observador = new IntersectionObserver(
+      ([entrada]) => {
+        if (entrada.isIntersecting) {
+          bloque.classList.add("is-abierto");
+          observador.disconnect();
+        }
+      },
+      { threshold: 0.3 },
+    );
+    observador.observe(bloque);
+  }
+</script>

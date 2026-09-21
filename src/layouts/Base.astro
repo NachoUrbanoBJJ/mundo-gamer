@@ -1,0 +1,194 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/main.scss";
+
+interface Props {
+  title: string;
+  description?: string;
+  currentRoute?: string;
+}
+
+const {
+  title,
+  description = "Mundo Gamer: hardware y tecnología gamer de calidad.",
+  currentRoute = "/",
+} = Astro.props;
+
+const sitio = Astro.site;
+const urlCanonica = new URL(Astro.url.pathname, sitio);
+const imagenOg = new URL("/assets/img/banner-gaming-setup.jpg", sitio);
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#111827" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="canonical" href={urlCanonica} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Mundo Gamer" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={urlCanonica} />
+    <meta property="og:locale" content="es_AR" />
+    <meta property="og:image" content={imagenOg} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imagenOg} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <Header currentRoute={currentRoute} />
+    <main class="contenedor-principal">
+      <slot />
+    </main>
+    <Footer />
+
+    <div class="carrito-overlay" data-carrito-overlay></div>
+
+    <aside
+      class="carrito-panel"
+      data-carrito-panel
+      aria-label="Carrito de compras"
+      aria-hidden="true"
+    >
+      <header class="carrito-panel__cabecera">
+        <h2 class="carrito-panel__titulo">Tu carrito</h2>
+        <button
+          type="button"
+          class="carrito-panel__cerrar"
+          data-carrito-cerrar
+          aria-label="Cerrar carrito"
+        >
+          &times;
+        </button>
+      </header>
+      <p class="carrito-panel__vacio" data-carrito-vacio>Tu carrito está vacío.</p>
+      <ul class="carrito-panel__lista" data-carrito-lista></ul>
+      <footer class="carrito-panel__pie" data-carrito-pie hidden>
+        <div class="carrito-panel__total">
+          <span>Total</span>
+          <strong data-carrito-total>$0</strong>
+        </div>
+        <button type="button" class="carrito-panel__facturar" data-carrito-facturar>
+          Finalizar compra
+        </button>
+        <button type="button" class="carrito-panel__vaciar" data-carrito-vaciar>
+          Vaciar carrito
+        </button>
+        <p class="carrito-panel__nota">
+          Simulación para el portfolio: no se procesan pagos reales.
+        </p>
+      </footer>
+    </aside>
+
+    <div class="checkout-overlay" data-checkout-overlay></div>
+
+    <section
+      class="checkout-panel"
+      data-checkout-panel
+      role="dialog"
+      aria-modal="true"
+      aria-label="Finalizar compra"
+      aria-hidden="true"
+    >
+      <header class="checkout-panel__cabecera">
+        <h2 class="checkout-panel__titulo">Finalizar compra</h2>
+        <button
+          type="button"
+          class="checkout-panel__cerrar"
+          data-checkout-cerrar
+          aria-label="Cerrar finalizar compra"
+        >
+          &times;
+        </button>
+      </header>
+
+      <div class="checkout-panel__paso" data-checkout-paso="pago">
+        <h3 class="checkout-panel__sub">Método de pago</h3>
+        <p class="checkout-panel__resumen" data-checkout-resumen></p>
+        <div class="checkout-metodos">
+          <label class="checkout-metodo">
+            <input type="radio" name="metodo-pago" value="tarjeta-credito" checked />
+            <span class="checkout-metodo__info">
+              <strong>Tarjeta de crédito</strong>
+              <small>Hasta 12 cuotas sin interés</small>
+            </span>
+          </label>
+          <label class="checkout-metodo">
+            <input type="radio" name="metodo-pago" value="mercadopago" />
+            <span class="checkout-metodo__info">
+              <strong>Mercado Pago</strong>
+              <small>Tarjetas, saldo y cuotas</small>
+            </span>
+          </label>
+          <label class="checkout-metodo">
+            <input type="radio" name="metodo-pago" value="debito" />
+            <span class="checkout-metodo__info">
+              <strong>Tarjeta de débito</strong>
+              <small>Pago inmediato</small>
+            </span>
+          </label>
+          <label class="checkout-metodo">
+            <input type="radio" name="metodo-pago" value="transferencia" />
+            <span class="checkout-metodo__info">
+              <strong>Transferencia / Efectivo</strong>
+              <small>10% de descuento</small>
+            </span>
+          </label>
+        </div>
+        <div class="checkout-panel__total">
+          <span>Total a pagar</span>
+          <strong data-checkout-total>$0</strong>
+        </div>
+        <p class="checkout-panel__descuento" data-checkout-descuento hidden>
+          Incluye el 10% OFF por transferencia / efectivo.
+        </p>
+        <div class="checkout-panel__acciones">
+          <button
+            type="button"
+            class="boton boton--grande checkout-panel__confirmar"
+            data-checkout-confirmar
+          >
+            Confirmar compra
+          </button>
+        </div>
+      </div>
+
+      <div class="checkout-panel__paso" data-checkout-paso="exito" hidden>
+        <div class="checkout-exito">
+          <span class="checkout-exito__icono" aria-hidden="true">&#10003;</span>
+          <h3 class="checkout-exito__titulo">¡Compra confirmada!</h3>
+          <p class="checkout-exito__texto">
+            Pedido <strong data-checkout-pedido></strong> por{" "}
+            <strong data-checkout-exito-total></strong> con{" "}
+            <strong data-checkout-exito-metodo></strong>.
+          </p>
+          <p class="checkout-exito__nota">
+            Es una simulación para el portfolio: no se procesan pagos reales.
+          </p>
+          <button type="button" class="boton checkout-exito__boton" data-checkout-fin>
+            Seguir comprando
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <div class="carrito-toast" data-carrito-toast role="status" aria-live="polite">
+      <span data-carrito-toast-mensaje></span>
+      <button type="button" data-carrito-toast-accion hidden>Ver carrito</button>
+    </div>
+
+    <script>
+      import "../scripts/carrito.js";
+    </script>
+  </body>
+</html>

@@ -1,0 +1,318 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+.encabezado {
+  &__tope {
+    background-color: $color-nav;
+    color: rgba($color-nav-texto, 0.88);
+    font-size: 0.85rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+    &-contenido {
+      @include contenedor;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      min-height: $alto-tope;
+    }
+  }
+
+  &__marca {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.3px;
+
+    a {
+      color: $color-nav-texto;
+      text-decoration: none;
+      display: inline-block;
+
+      span {
+        color: $color-primario;
+      }
+
+      &:hover {
+        color: $color-nav-texto;
+      }
+    }
+  }
+
+  &__info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  &__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: rgba($color-nav-texto, 0.88);
+    text-decoration: none;
+
+    svg {
+      flex: 0 0 auto;
+      color: $color-primario;
+    }
+
+    &:hover {
+      color: $color-nav-texto;
+    }
+
+    &--direccion {
+      display: none;
+
+      @include respond-to(md) {
+        display: inline-flex;
+      }
+    }
+
+    &--telefono {
+      display: none;
+
+      @include respond-to(md) {
+        display: inline-flex;
+      }
+    }
+  }
+
+  &__redes {
+    display: none;
+
+    @include respond-to(md) {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-left: 0.5rem;
+      padding-left: 0.75rem;
+      border-left: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba($color-nav-texto, 0.8);
+      transition: color 0.2s ease, transform 0.2s ease;
+
+      &:hover {
+        color: $color-primario;
+        transform: translateY(-1px);
+      }
+    }
+  }
+
+  &__nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: rgba($color-nav-claro, 0.92);
+    backdrop-filter: blur(8px);
+    color: $color-nav-texto;
+
+    &-contenido {
+      @include contenedor;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      min-height: $alto-nav;
+    }
+  }
+
+  &__usuario {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-left: auto;
+    padding: 0.4rem 0.8rem;
+    border: 1px solid rgba($color-primario, 0.55);
+    border-radius: 999px;
+    color: $color-nav-texto;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+
+    svg {
+      flex: 0 0 auto;
+      width: 18px;
+      height: 18px;
+      color: $color-primario;
+    }
+
+    &:hover {
+      background-color: rgba($color-primario, 0.18);
+      border-color: $color-primario;
+      text-decoration: none;
+    }
+
+    &-texto {
+      display: none;
+
+      @include respond-to(md) {
+        display: inline;
+      }
+    }
+
+    @include respond-to(md) {
+      position: absolute;
+      right: 1.5rem;
+      margin-left: 0;
+    }
+  }
+
+  &__toggle {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  &__hamburguesa {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 0.5rem;
+
+    span {
+      display: block;
+      width: 26px;
+      height: 3px;
+      border-radius: 2px;
+      background-color: $color-nav-texto;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+  }
+
+  &__menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    display: none;
+    background-color: $color-nav-claro;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.5rem 0 1rem;
+
+    ul {
+      @include contenedor;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    a {
+      display: block;
+      padding: 0.7rem 0.75rem;
+      border-radius: $radio-pequeno;
+      color: $color-nav-texto;
+      font-weight: 500;
+      text-decoration: none;
+
+      &:hover {
+        background-color: $color-acento-suave;
+        color: $color-primario;
+      }
+
+      &.activo {
+        color: $color-primario;
+      }
+    }
+  }
+
+  &__toggle:checked ~ &__menu {
+    display: block;
+    width: 100%;
+  }
+
+  &__menu-contacto {
+    @include contenedor;
+    margin-top: 0.5rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+
+    a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: rgba($color-nav-texto, 0.88);
+      font-weight: 500;
+      text-decoration: none;
+
+      svg {
+        width: 16px;
+        height: 16px;
+        color: $color-primario;
+      }
+
+      &:hover {
+        color: $color-primario;
+      }
+    }
+
+    @include respond-to(md) {
+      display: none;
+    }
+  }
+
+  &__menu-redes {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    a {
+      color: rgba($color-nav-texto, 0.85);
+
+      &:hover {
+        color: $color-primario;
+      }
+    }
+  }
+
+  @include respond-to(md) {
+    &__hamburguesa {
+      display: none;
+    }
+
+    &__nav-contenido {
+      justify-content: center;
+    }
+
+    &__menu {
+      position: static;
+      display: block;
+      background-color: transparent;
+      border-top: none;
+      padding: 0;
+
+      ul {
+        flex-direction: row;
+        align-items: center;
+        gap: 0.25rem;
+        margin: 0;
+        max-width: none;
+        padding-inline: 0;
+      }
+
+      a {
+        padding: 0.5rem 0.75rem;
+        color: rgba($color-nav-texto, 0.9);
+
+        &.activo {
+          background-color: rgba($color-primario, 0.18);
+          color: $color-primario;
+        }
+      }
+    }
+  }
+}

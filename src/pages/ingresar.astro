@@ -1,0 +1,177 @@
+---
+import Base from "../layouts/Base.astro";
+---
+
+<Base
+  title="Ingresar | Mundo Gamer"
+  description="Iniciá sesión o creá tu cuenta en Mundo Gamer."
+  currentRoute="/ingresar"
+>
+  <section class="seccion">
+    <div class="contenedor">
+      <h2 class="titulo-seccion">
+        Tu cuenta <span>Mundo Gamer</span>
+      </h2>
+      <p class="subtitulo-seccion">
+        Iniciá sesión para hacer seguimiento de tus pedidos o creá tu cuenta.
+      </p>
+
+      <div class="auth-card tarjeta">
+        <input
+          type="radio"
+          name="auth-modo"
+          id="auth-entrar"
+          class="auth-card__radio"
+          value="entrar"
+          checked
+        />
+        <input
+          type="radio"
+          name="auth-modo"
+          id="auth-crear"
+          class="auth-card__radio"
+          value="crear"
+        />
+
+        <div class="auth-card__tabs" role="tablist" aria-label="Opciones de cuenta">
+          <label for="auth-entrar" role="tab" aria-selected="true">Iniciar sesión</label>
+          <label for="auth-crear" role="tab" aria-selected="false">Crear cuenta</label>
+        </div>
+
+        <section class="auth-card__panel" data-auth-panel="entrar" role="tabpanel">
+          <form class="formulario" data-auth-form>
+            <label class="formulario__campo">
+              <span class="formulario__etiqueta">Email</span>
+              <input
+                class="formulario__entrada"
+                type="email"
+                name="email"
+                autocomplete="email"
+                placeholder="tu@email.com"
+                required
+              />
+            </label>
+            <label class="formulario__campo">
+              <span class="formulario__etiqueta">Contraseña</span>
+              <input
+                class="formulario__entrada"
+                type="password"
+                name="contrasena"
+                autocomplete="current-password"
+                required
+              />
+            </label>
+            <p class="formulario__mensaje-error" data-auth-resultado aria-live="polite"></p>
+            <button type="submit" class="formulario__boton">Iniciar sesión</button>
+            <p class="auth-card__cambiar">
+              ¿No tenés cuenta?
+              <button type="button" data-auth-cambiar="crear">Creá una acá</button>
+            </p>
+          </form>
+        </section>
+
+        <section class="auth-card__panel" data-auth-panel="crear" role="tabpanel" hidden>
+          <form class="formulario" data-auth-form>
+            <label class="formulario__campo">
+              <span class="formulario__etiqueta">Nombre</span>
+              <input
+                class="formulario__entrada"
+                type="text"
+                name="nombre"
+                autocomplete="name"
+                required
+              />
+            </label>
+            <label class="formulario__campo">
+              <span class="formulario__etiqueta">Email</span>
+              <input
+                class="formulario__entrada"
+                type="email"
+                name="email"
+                autocomplete="email"
+                placeholder="tu@email.com"
+                required
+              />
+            </label>
+            <label class="formulario__campo">
+              <span class="formulario__etiqueta">Contraseña</span>
+              <input
+                class="formulario__entrada"
+                type="password"
+                name="contrasena"
+                autocomplete="new-password"
+                required
+              />
+            </label>
+            <label class="formulario__campo">
+              <span class="formulario__etiqueta">Repetí la contraseña</span>
+              <input
+                class="formulario__entrada"
+                type="password"
+                name="contrasena2"
+                autocomplete="new-password"
+                required
+              />
+            </label>
+            <p class="formulario__mensaje-error" data-auth-resultado aria-live="polite"></p>
+            <button type="submit" class="formulario__boton">Crear cuenta</button>
+            <p class="auth-card__cambiar">
+              ¿Ya tenés cuenta?
+              <button type="button" data-auth-cambiar="entrar">Iniciá sesión</button>
+            </p>
+          </form>
+        </section>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const radios = Array.from(document.querySelectorAll("[name='auth-modo']"));
+
+  function actualizar() {
+    const modo = radios.find((r) => r.checked)?.value ?? "entrar";
+    document.querySelectorAll("[data-auth-panel]").forEach((panel) => {
+      panel.hidden = panel.dataset.authPanel !== modo;
+    });
+    document.querySelectorAll(".auth-card__tabs label").forEach((label) => {
+      const idRadio = modo === "entrar" ? "auth-entrar" : "auth-crear";
+      label.setAttribute("aria-selected", String(label.getAttribute("for") === idRadio));
+    });
+  }
+
+  radios.forEach((radio) => radio.addEventListener("change", actualizar));
+
+  document.querySelectorAll("[data-auth-cambiar]").forEach((boton) => {
+    boton.addEventListener("click", () => {
+      const radio = radios.find((r) => r.id === `auth-${boton.dataset.authCambiar}`);
+      if (radio) {
+        radio.checked = true;
+        actualizar();
+      }
+    });
+  });
+
+  document.querySelectorAll("[data-auth-form]").forEach((form) => {
+    form.addEventListener("submit", (evento) => {
+      evento.preventDefault();
+      const resultado = form.querySelector("[data-auth-resultado]");
+      const crear = form.closest("[data-auth-panel]").dataset.authPanel === "crear";
+
+      const contrasena = form.querySelector('[name="contrasena"]');
+      const confirmacion = form.querySelector('[name="contrasena2"]');
+      if (confirmacion && contrasena.value !== confirmacion.value) {
+        resultado.textContent = "Las contraseñas no coinciden.";
+        resultado.classList.remove("is-ok");
+        return;
+      }
+
+      resultado.classList.add("is-ok");
+      resultado.textContent = crear
+        ? "¡Cuenta creada! (demo: la conexión real llegará con el backend)."
+        : "¡Sesión iniciada! (demo: la autenticación real llegará con el backend).";
+    });
+  });
+
+  actualizar();
+</script>

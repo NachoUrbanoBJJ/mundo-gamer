@@ -1,0 +1,25 @@
+---
+import Icono from "./Icono.astro";
+
+interface Props {
+  nombre: string;
+  descripcion: string;
+  icono: string;
+  enlace: string;
+}
+
+const { nombre, descripcion, icono, enlace } = Astro.props;
+---
+
+<article class="categoria-card">
+  <a href={enlace} class="categoria-card__enlace">
+    <div class="categoria-card__icono" aria-hidden="true">
+      <Icono nombre={icono} />
+    </div>
+    <div class="categoria-card__cuerpo">
+      <h3 class="categoria-card__titulo">{nombre}</h3>
+      <p class="categoria-card__descripcion">{descripcion}</p>
+      <span class="categoria-card__enlace-texto">Ver categoría</span>
+    </div>
+  </a>
+</article>

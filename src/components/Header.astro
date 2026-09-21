@@ -1,0 +1,133 @@
+---
+import Icono from "./Icono.astro";
+
+interface Props {
+  currentRoute?: string;
+}
+
+const { currentRoute = "/" } = Astro.props;
+
+const enlaces = [
+  { href: "/", etiqueta: "Inicio" },
+  { href: "/productos", etiqueta: "Productos" },
+  { href: "/nosotros", etiqueta: "Nosotros" },
+];
+
+const redes = [
+  { nombre: "Facebook", url: "https://facebook.com", icono: "facebook" },
+  { nombre: "X (Twitter)", url: "https://x.com", icono: "x" },
+  { nombre: "Instagram", url: "https://instagram.com", icono: "instagram" },
+  { nombre: "WhatsApp", url: "https://wa.me/", icono: "whatsapp" },
+];
+---
+
+<header class="encabezado">
+  <div class="encabezado__tope">
+    <div class="encabezado__tope-contenido contenedor">
+      <h1 class="encabezado__marca">
+        <a href="/">Mundo<span>Gamer</span></a>
+      </h1>
+
+      <div class="encabezado__info">
+        <span class="encabezado__item encabezado__item--direccion">
+          <Icono nombre="ubicacion" />
+          Avenida Siempre Viva 374
+        </span>
+        <a
+          class="encabezado__item encabezado__item--telefono"
+          href="tel:08008883235"
+        >
+          <Icono nombre="telefono" />
+          0800-888-3235
+        </a>
+        <button
+          type="button"
+          class="encabezado__carrito"
+          data-carrito-abrir
+          aria-label="Abrir carrito de compras"
+        >
+          <Icono nombre="carrito" />
+          <span class="encabezado__carrito-monto" data-carrito-monto>$0</span>
+          <span class="encabezado__carrito-contador" data-carrito-contador aria-hidden="true">0</span>
+        </button>
+        <div class="encabezado__redes">
+          {
+            redes.map(({ nombre, url, icono }) => (
+              <a
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={nombre}
+              >
+                <Icono nombre={icono} />
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="encabezado__nav">
+    <div class="encabezado__nav-contenido contenedor">
+      <input
+        type="checkbox"
+        id="menu-toggle"
+        class="encabezado__toggle"
+        aria-hidden="true"
+      />
+      <label for="menu-toggle" class="encabezado__hamburguesa" aria-label="Abrir menú">
+        <span></span>
+        <span></span>
+        <span></span>
+      </label>
+
+      <nav class="encabezado__menu" aria-label="Navegación principal">
+        <ul>
+          {
+            enlaces.map(({ href, etiqueta }) => {
+              const activo = currentRoute === href;
+              return (
+                <li>
+                  <a
+                    href={href}
+                    class:list={{ activo }}
+                    aria-current={activo ? "page" : undefined}
+                  >
+                    {etiqueta}
+                  </a>
+                </li>
+              );
+            })
+          }
+        </ul>
+
+        <div class="encabezado__menu-contacto">
+          <a href="tel:08008883235" aria-label="Llamar al 0800-888-3235">
+            <Icono nombre="telefono" />
+            0800-888-3235
+          </a>
+          <div class="encabezado__menu-redes">
+            {
+              redes.map(({ nombre, url, icono }) => (
+                <a
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={nombre}
+                >
+                  <Icono nombre={icono} />
+                </a>
+              ))
+            }
+          </div>
+        </div>
+      </nav>
+
+      <a class="encabezado__usuario" href="/ingresar">
+        <Icono nombre="usuario" />
+        <span class="encabezado__usuario-texto">Ingresar</span>
+      </a>
+    </div>
+  </div>
+</header>

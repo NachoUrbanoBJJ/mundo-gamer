@@ -1,0 +1,57 @@
+$color-fondo: #f5f6f8;
+$color-superficie: #ffffff;
+$color-superficie-2: #f7f8fa;
+$color-texto: #1f2933;
+$color-texto-suave: #6b7280;
+$color-borde: #e5e7eb;
+
+$color-nav: #111827;
+$color-nav-texto: #f9fafb;
+$color-nav-claro: #1f2937;
+$color-texto-sobre-oscuro: #f9fafb;
+$color-acento-suave: rgba(255, 255, 255, 0.08);
+
+$color-primario: #4caf50;
+$color-primario-oscuro: #388e3c;
+$color-primario-claro: #e8f5e9;
+
+$color-celeste: #42a5f5;
+
+$color-naranja: #ff7a1a;
+$color-naranja-oscuro: #e05f00;
+
+$color-bordo: #7b2431;
+$color-bordo-oscuro: #5c1b26;
+
+$color-error: #d32f2f;
+
+$sombra: 0 4px 14px rgba(0, 0, 0, 0.08);
+$sombra-fuerte: 0 10px 24px rgba(0, 0, 0, 0.14);
+
+$radio: 14px;
+$radio-pequeno: 8px;
+
+$fuente-principal: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+
+$contenedor-max: 1200px;
+
+$bp-sm: 576px;
+$bp-md: 768px;
+$bp-lg: 1024px;
+
+$alto-tope: 44px;
+$alto-nav: 60px;
+
+$color-boton: #0a0a0f;
+$color-boton-suave: #16161f;
+
+$degradado-rgb: conic-gradient(
+  from 90deg,
+  #ff0030,
+  #ff7a00,
+  #ffee00,
+  #00ff7a,
+  #00c2ff,
+  #7a00ff,
+  #ff0030
+);

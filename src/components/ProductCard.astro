@@ -1,0 +1,49 @@
+---
+interface Props {
+  nombre: string;
+  categoria: string;
+  precio: string;
+  imagen: string;
+  alt?: string;
+  etiqueta?: string;
+  precioAntes?: string;
+  cuotas?: string;
+  enlace?: string;
+}
+
+const {
+  nombre,
+  categoria,
+  precio,
+  imagen,
+  alt = nombre,
+  etiqueta,
+  precioAntes,
+  cuotas,
+  enlace = "/productos",
+} = Astro.props;
+---
+
+<article class="producto-card">
+  <a href={enlace} class="producto-card__enlace">
+    <div class="producto-card__imagen">
+      <div class="producto-card__etiquetas">
+        {precioAntes && (
+          <span class="producto-card__etiqueta producto-card__etiqueta--oferta">
+            Oferta
+          </span>
+        )}
+        {etiqueta && <span class="producto-card__etiqueta">{etiqueta}</span>}
+      </div>
+      <img src={imagen} alt={alt} loading="lazy" width="400" height="300" />
+    </div>
+    <div class="producto-card__cuerpo">
+      <span class="producto-card__categoria">{categoria}</span>
+      <h3 class="producto-card__nombre">{nombre}</h3>
+      {precioAntes && <span class="producto-card__precio-antes">{precioAntes}</span>}
+      {cuotas && <span class="producto-card__cuotas">{cuotas}</span>}
+      <p class="producto-card__precio">{precio}</p>
+      <span class="producto-card__boton">Ver producto</span>
+    </div>
+  </a>
+</article>

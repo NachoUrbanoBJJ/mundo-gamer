@@ -1,0 +1,383 @@
+@use "variables" as *;
+@use "mixins" as *;
+@use "sass:color";
+
+.detalle {
+  &__miga {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1.25rem;
+    font-size: 0.85rem;
+    color: $color-texto-suave;
+
+    a {
+      color: $color-primario-oscuro;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    &-actual {
+      font-weight: 600;
+      color: $color-texto;
+    }
+  }
+}
+
+.detalle-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  align-items: start;
+
+  @include respond-to(lg) {
+    grid-template-columns: 1.15fr 1fr;
+  }
+}
+
+.detalle__imagen {
+  @include tarjeta;
+  padding: 1rem;
+  background-color: $color-superficie-2;
+
+  img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: contain;
+    border-radius: $radio-pequeno;
+  }
+}
+
+.detalle__compra {
+  @include tarjeta;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  &-cabecera {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+}
+
+.detalle__categoria {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: $color-primario-oscuro;
+}
+
+.detalle__etiquetas {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.detalle__etiqueta {
+  padding: 0.3rem 0.65rem;
+  background-color: $color-primario;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-radius: $radio-pequeno;
+
+  &--oferta {
+    background-color: $color-naranja;
+  }
+}
+
+.detalle__nombre {
+  margin: 0;
+  font-size: clamp(1.3rem, 3vw, 1.65rem);
+  font-weight: 800;
+  line-height: 1.2;
+  color: $color-texto;
+}
+
+.detalle__precio-bloque {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid $color-borde;
+}
+
+.detalle__precio-antes {
+  font-size: 0.95rem;
+  color: $color-texto-suave;
+  text-decoration: line-through;
+}
+
+.detalle__precio-fila {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.detalle__precio {
+  font-size: 2.2rem;
+  font-weight: 800;
+  line-height: 1.1;
+  color: $color-texto;
+}
+
+.detalle__ahorro {
+  padding: 0.25rem 0.6rem;
+  background-color: rgba($color-naranja, 0.14);
+  color: $color-naranja-oscuro;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border-radius: $radio-pequeno;
+}
+
+.detalle__cuotas {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: $color-primario;
+}
+
+.detalle__aviso {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.85rem 1rem;
+  border-radius: $radio-pequeno;
+  font-size: 0.88rem;
+
+  strong {
+    font-size: 0.92rem;
+  }
+
+  &--stock {
+    background-color: $color-primario-claro;
+    border: 1px solid rgba($color-primario-oscuro, 0.4);
+    color: $color-primario-oscuro;
+  }
+
+  &--preventa {
+    background-color: #fff3e0;
+    border: 1px solid rgba($color-naranja, 0.5);
+    color: $color-naranja-oscuro;
+  }
+}
+
+.detalle__cantidad {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.9rem;
+  color: $color-texto-suave;
+}
+
+.detalle__stepper {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid $color-borde;
+  border-radius: $radio-pequeno;
+  overflow: hidden;
+  background-color: $color-superficie;
+
+  button {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border: none;
+    background-color: $color-superficie-2;
+    color: $color-texto;
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+
+    &:hover {
+      background-color: $color-borde;
+      color: $color-primario-oscuro;
+    }
+  }
+
+  span {
+    display: grid;
+    place-items: center;
+    min-width: 44px;
+    height: 42px;
+    font-weight: 700;
+    color: $color-texto;
+  }
+}
+
+.detalle__acciones {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.detalle__btn-comprar {
+  display: block;
+  position: relative;
+  width: 100%;
+  padding: 0.9rem 1.5rem;
+  border: none;
+  border-radius: $radio-pequeno;
+  background-color: $color-primario-oscuro;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  @include borde-rgb;
+
+  &:hover {
+    background-color: color.adjust($color-primario-oscuro, $lightness: -6%);
+    transform: translateY(-1px);
+    box-shadow: 0 0 16px rgba($color-primario-oscuro, 0.45);
+  }
+}
+
+.detalle__btn-carrito {
+  display: block;
+  width: 100%;
+  @include boton;
+}
+
+.detalle__armado-lista {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background-color: $color-superficie-2;
+  border-radius: $radio-pequeno;
+  font-size: 0.9rem;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  svg {
+    flex: 0 0 auto;
+    color: $color-primario-oscuro;
+  }
+}
+
+.detalle__garantias {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem 1rem;
+
+  li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+
+    svg {
+      flex: 0 0 auto;
+      margin-top: 2px;
+      color: $color-primario-oscuro;
+    }
+  }
+
+  strong {
+    display: block;
+    font-size: 0.85rem;
+    color: $color-texto;
+  }
+
+  span {
+    font-size: 0.78rem;
+    color: $color-texto-suave;
+  }
+}
+
+.detalle__sin-precio {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: flex-start;
+
+  p {
+    margin: 0;
+    color: $color-texto-suave;
+  }
+}
+
+.detalle-info-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+
+  @include respond-to(lg) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.detalle-info {
+  @include tarjeta;
+  padding: 1.5rem;
+
+  &__titulo {
+    margin: 0 0 0.9rem;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: $color-texto;
+  }
+
+  p {
+    margin: 0;
+    color: $color-texto-suave;
+    line-height: 1.6;
+  }
+
+  &__especificaciones {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.6rem 0.2rem;
+      border-bottom: 1px solid $color-borde;
+      font-size: 0.9rem;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      span {
+        color: $color-texto-suave;
+      }
+
+      strong {
+        text-align: right;
+        color: $color-texto;
+      }
+    }
+  }
+}
+
+.detalle__relacionados {
+  margin-top: 2.5rem;
+}

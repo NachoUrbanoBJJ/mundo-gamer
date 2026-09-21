@@ -1,0 +1,172 @@
+?--- 
+import Base from "../layouts/Base.astro";
+import Carousel from "../components/Carousel.astro";
+import Marquesina from "../components/Marquesina.astro";
+import CategoriaCard from "../components/CategoriaCard.astro";
+import ProductCard from "../components/ProductCard.astro";
+import {
+  categorias,
+  productoDestacado,
+  productosDeCategoria,
+} from "../data/catalogo.js";
+
+const slides = [
+  {
+    imagen: "/assets/img/banner-armado-pc.jpg",
+    alt: "PC gamer armado a medida",
+    badge: "Servicio",
+    titulo: "Armado de PC a medida",
+    cta: { etiqueta: "Cotizá tu armado", enlace: "/productos/armado/destacado-armado-pc" },
+  },
+  {
+    imagen: "/assets/img/banner-setup.jpg",
+    alt: "Setup gamer completo",
+    badge: "Armado completo",
+    titulo: "Armá tu setup gamer completo",
+    cta: { etiqueta: "Ver productos", enlace: "/productos" },
+  },
+  {
+    imagen: "/assets/img/banner-armado-custom.jpg",
+    alt: "PC gamer armado custom",
+    badge: "Custom",
+    titulo: "Armado custom: tu PC, tu estilo",
+    cta: { etiqueta: "Ver armados", enlace: "/productos/armado/destacado-armado-pc" },
+  },
+];
+
+const marquesina = [
+  "Envío gratis en compras mayores a $100.000",
+  "Hasta 12 cuotas sin interés",
+  "Ofertas renovadas todas las semanas",
+  "Garantía oficial en todos los productos",
+  "Financiá tus compras con Mercado Pago",
+];
+
+const destacados = [
+  productosDeCategoria("placas")[0],
+  productosDeCategoria("monitores")[0],
+  productosDeCategoria("discos")[0],
+  productoDestacado,
+];
+
+const beneficios = [
+  {
+    titulo: "Envíos a todo el país",
+    descripcion: "Recibí tus productos entre 24 y 72 hs hábiles.",
+  },
+  {
+    titulo: "Garantía oficial",
+    descripcion: "Todos los productos con garantía de fábrica.",
+  },
+  {
+    titulo: "Atención personalizada",
+    descripcion: "Te asesoramos para armar el setup ideal.",
+  },
+  {
+    titulo: "12 cuotas sin interés",
+    descripcion: "Financiá con tarjetas y Mercado Pago.",
+    cuotas: true,
+  },
+];
+---
+
+<Base
+  title="Mundo Gamer | Hardware y tecnología gaming"
+  description="Encontrá los mejores productos gamer: placas de video, monitores, memorias RAM, SSD, periféricos y mucho más."
+  currentRoute="/"
+>
+  <section class="carrusel-portada" aria-label="Promociones destacadas">
+    <Carousel slides={slides} />
+    <Marquesina items={marquesina} />
+  </section>
+
+  <section class="beneficios" aria-label="Beneficios">
+    <div class="beneficios__lista">
+      {
+        beneficios.map(({ titulo, descripcion, cuotas }) => (
+          <div class:list={["beneficios__item", { "beneficios__item--cuotas": cuotas }]}>
+            {cuotas ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <rect x="1" y="4" width="22" height="16" rx="2" />
+                <line x1="1" y1="10" x2="23" y2="10" />
+              </svg>
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <circle cx="8" cy="18" r="2" />
+                <circle cx="16" cy="18" r="2" />
+                <path d="M3 6h13l3 6v6h-3" />
+                <path d="M3 18v-7" />
+              </svg>
+            )}
+            <div>
+              <strong>{titulo}</strong>
+              <span>{descripcion}</span>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="seccion">
+    <div class="contenedor">
+      <h2 class="titulo-seccion">
+        Explorá por <span>categoría</span>
+      </h2>
+      <p class="subtitulo-seccion">
+        Todo lo que tu setup necesita, en un solo lugar
+      </p>
+
+      <div class="producto-grid">
+        {
+          categorias.map((categoria) => <CategoriaCard {...categoria} />)
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="seccion">
+    <div class="contenedor">
+      <h2 class="titulo-seccion titulo-seccion--naranja">
+        Ofertas de la <span>semana</span>
+      </h2>
+      <p class="subtitulo-seccion">
+        Los precios más bajos en los productos más buscados
+      </p>
+
+      <a class="oferta-banner" href="/productos">
+        &quot;Hasta <strong>12 cuotas sin interés</strong> con todas las
+        tarjetas&quot; — Aprovechá los precios de esta semana &rsaquo;
+      </a>
+
+      <div class="producto-grid oferta-grid">
+        {
+          destacados.map((producto) => (
+            <ProductCard
+              {...producto}
+              enlace={`/productos/${producto.categoria}/${producto.id}`}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</Base>

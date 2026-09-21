@@ -1,0 +1,275 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+.producto-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+
+  @include respond-to(sm) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include respond-to(lg) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.oferta-grid {
+  margin-top: 1.5rem;
+}
+
+.producto-card {
+  @include tarjeta;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 24px rgba($color-naranja, 0.28), $sombra-fuerte;
+  }
+
+  &__enlace {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    color: $color-texto;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: none;
+      color: $color-texto;
+    }
+  }
+
+  &__imagen {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-bottom: 1px solid $color-borde;
+    background-color: $color-superficie-2;
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      transition: transform 0.3s ease;
+    }
+  }
+
+  &:hover &__imagen img {
+    transform: scale(1.05);
+  }
+
+  &__etiquetas {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    z-index: 1;
+  }
+
+  &__etiqueta {
+    padding: 0.3rem 0.65rem;
+    background-color: $color-primario;
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: $radio-pequeno;
+
+    &--oferta {
+      background-color: $color-naranja;
+    }
+  }
+
+  &__cuerpo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 1.25rem;
+    flex: 1;
+  }
+
+  &__categoria {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: $color-primario-oscuro;
+  }
+
+  &__nombre {
+    font-size: 1.05rem;
+    margin: 0;
+    color: $color-texto;
+  }
+
+  &__precio {
+    margin: 0.35rem 0 0.75rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: $color-texto;
+
+    span {
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: $color-texto-suave;
+    }
+  }
+
+  &__precio-antes {
+    display: block;
+    font-size: 0.85rem;
+    color: $color-texto-suave;
+    text-decoration: line-through;
+  }
+
+  &__cuotas {
+    display: block;
+    margin-top: 0.15rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: $color-primario;
+  }
+
+  &__boton {
+    margin-top: auto;
+    @include boton;
+  }
+}
+
+.categoria-card {
+  @include tarjeta;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $sombra-fuerte;
+  }
+
+  &__enlace {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    color: $color-texto;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: none;
+      color: $color-texto;
+    }
+  }
+
+  &__icono {
+    position: relative;
+    display: grid;
+    place-items: center;
+    padding: 2.25rem 1rem 0.75rem;
+    color: $color-celeste;
+
+    &::before {
+      content: "";
+      position: absolute;
+      width: 92px;
+      height: 92px;
+      border-radius: 50%;
+      background-color: rgba($color-celeste, 0.12);
+      border: 1px solid rgba($color-celeste, 0.35);
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      width: 44px;
+      height: 2px;
+      border-radius: 2px;
+      background-color: $color-celeste;
+      transition: width 0.3s ease;
+    }
+
+    svg {
+      position: relative;
+      width: 62px;
+      height: 62px;
+      stroke-width: 1.6;
+      transition: transform 0.3s ease;
+    }
+  }
+
+  &:hover &__icono {
+    &::before {
+      transform: scale(1.12);
+      background-color: rgba($color-celeste, 0.2);
+    }
+
+    &::after {
+      width: 64px;
+    }
+
+    svg {
+      transform: scale(1.06);
+    }
+  }
+
+  &__cuerpo {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    text-align: center;
+    flex: 1;
+  }
+
+  &__titulo {
+    margin: 0;
+    font-size: 1.1rem;
+  }
+
+  &__descripcion {
+    margin: 0 0 0.75rem;
+    font-size: 0.9rem;
+    color: $color-texto-suave;
+  }
+
+  &__enlace-texto {
+    margin-top: auto;
+    color: $color-primario-oscuro;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+}
+
+.oferta-banner {
+  display: block;
+  padding: 1rem 1.5rem;
+  border-radius: $radio;
+  border: 1px solid rgba($color-naranja, 0.5);
+  background: linear-gradient(90deg, $color-bordo-oscuro, $color-bordo);
+  color: #fff;
+  font-weight: 600;
+  text-align: center;
+  box-shadow: 0 0 18px rgba($color-bordo, 0.5);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  strong {
+    color: $color-naranja;
+  }
+
+  &:hover {
+    color: #fff;
+    text-decoration: none;
+    transform: translateY(-2px);
+    box-shadow: 0 0 28px rgba($color-naranja, 0.4);
+  }
+}

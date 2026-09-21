@@ -1,0 +1,257 @@
+---
+import Base from "../../../layouts/Base.astro";
+import ProductCard from "../../../components/ProductCard.astro";
+import Icono from "../../../components/Icono.astro";
+import {
+  categorias,
+  productoDestacado,
+  productosDeCategoria,
+  buscarProducto,
+  precioANumero,
+  numeroAPrecio,
+} from "../../../data/catalogo.js";
+import { detalleDe } from "../../../data/productos-extra.js";
+
+export function getStaticPaths() {
+  const rutas = [];
+
+  for (const categoria of categorias) {
+    for (const producto of productosDeCategoria(categoria.slug)) {
+      rutas.push({
+        params: { slug: categoria.slug, producto: producto.id },
+        props: { id: producto.id },
+      });
+    }
+  }
+
+  rutas.push({
+    params: { slug: "armado", producto: productoDestacado.id },
+    props: { id: productoDestacado.id },
+  });
+
+  return rutas;
+}
+
+const { id } = Astro.props;
+const resultado = buscarProducto(id);
+
+if (!resultado) {
+  throw new Error(`Producto no encontrado: ${id}`);
+}
+
+const { producto, categoria } = resultado;
+const extra = detalleDe(id);
+
+const precioNumero = precioANumero(producto.precio);
+const precioAntesNumero = producto.precioAntes ? precioANumero(producto.precioAntes) : 0;
+const ahorro = precioAntesNumero > precioNumero ? precioAntesNumero - precioNumero : 0;
+const tienePrecio = precioNumero > 0;
+
+const garantias = [
+  { icono: "proteccion", titulo: "Compra protegida", texto: "Pagás con Mercado Pago" },
+  { icono: "envio", titulo: "Envío gratis", texto: "A todo el país desde $100.000" },
+  { icono: "check", titulo: "Garantía oficial", texto: "Todos nuestros productos" },
+  { icono: "check", titulo: "Cuotas", texto: "Hasta 12 sin interés" },
+];
+
+const destacadosEnOferta = [
+  { icono: "check", etiqueta: "Incluye fuente de 750W certificada" },
+  { icono: "check", etiqueta: "Envío e instalación del S.O. incluidos" },
+  { icono: "check", etiqueta: "Presupuesto armado en 24 hs" },
+];
+
+const relacionados = productosDeCategoria(categoria.slug)
+  .filter((p) => p.id !== id)
+  .slice(0, 3);
+
+const porcentajeAhorro =
+  ahorro > 0 ? Math.round((ahorro / precioAntesNumero) * 100) : 0;
+---
+
+<Base
+  title={`${producto.nombre} | Mundo Gamer`}
+  description={extra.descripcion || `${producto.nombre} en Mundo Gamer.`}
+  currentRoute="/productos"
+>
+  <section class="seccion">
+    <div class="contenedor">
+      <nav class="detalle__miga" aria-label="Recorrido del producto">
+        <a href="/">Inicio</a>
+        <span aria-hidden="true">&rsaquo;</span>
+        <a href="/productos">Productos</a>
+        <span aria-hidden="true">&rsaquo;</span>
+        {categoria.slug === "armado" ? (
+          <span class="detalle__miga-actual">{categoria.nombre}</span>
+        ) : (
+          <a href={`/productos/${categoria.slug}`}>{categoria.nombre}</a>
+        )}
+        <span aria-hidden="true">&rsaquo;</span>
+        <span class="detalle__miga-actual" aria-current="page">{producto.nombre}</span>
+      </nav>
+
+      <div class="detalle-grid">
+        <div class="detalle__imagen">
+          <img
+            src={producto.imagen}
+            alt={producto.alt ?? producto.nombre}
+            width="800"
+            height="600"
+          />
+        </div>
+
+        <div class="detalle__compra" data-ficha-producto data-id={producto.id} data-nombre={producto.nombre} data-imagen={producto.imagen} data-alt={producto.alt ?? producto.nombre} data-precio={precioNumero} data-slug={categoria.slug}>
+          <div class="detalle__compra-cabecera">
+            <span class="detalle__categoria">{categoria.nombre}</span>
+            <div class="detalle__etiquetas">
+              {producto.etiqueta && (
+                <span class="detalle__etiqueta">{producto.etiqueta}</span>
+              )}
+              {producto.precioAntes && (
+                <span class="detalle__etiqueta detalle__etiqueta--oferta">Oferta</span>
+              )}
+            </div>
+          </div>
+
+          <h2 class="detalle__nombre">{producto.nombre}</h2>
+
+          <div class="detalle__precio-bloque">
+            {producto.precioAntes && (
+              <span class="detalle__precio-antes">{producto.precioAntes}</span>
+            )}
+            <div class="detalle__precio-fila">
+              <strong class="detalle__precio">{producto.precio}</strong>
+              {porcentajeAhorro > 0 && (
+                <span class="detalle__ahorro">{porcentajeAhorro}% OFF</span>
+              )}
+            </div>
+            {producto.cuotas && (
+              <span class="detalle__cuotas">{producto.cuotas}</span>
+            )}
+          </div>
+
+          {extra.preventa && (
+            <div class="detalle__aviso detalle__aviso--preventa">
+              <strong>Preventa abierta</strong>
+              <span>
+                Simulá la compra y reservá tu unidad. {extra.entrega}
+              </span>
+            </div>
+          )}
+          {!extra.preventa && (
+            <div class="detalle__aviso detalle__aviso--stock">
+              <strong>Stock disponible</strong>
+              <span>{extra.entrega}</span>
+            </div>
+          )}
+
+          {tienePrecio ? (
+            <>
+              <div class="detalle__cantidad">
+                <span class="detalle__cantidad-etiqueta">Cantidad</span>
+                <div class="detalle__stepper">
+                  <button type="button" data-cantidad-restar aria-label="Quitar una unidad">
+                    &minus;
+                  </button>
+                  <span data-cantidad-valor>1</span>
+                  <button type="button" data-cantidad-sumar aria-label="Agregar una unidad">
+                    +
+                  </button>
+                </div>
+              </div>
+
+              <div class="detalle__acciones">
+                <button type="button" class="detalle__btn-comprar" data-comprar>
+                  Comprar ahora
+                </button>
+                <button type="button" class="detalle__btn-carrito" data-agregar>
+                  Agregar al carrito
+                </button>
+              </div>
+
+              {
+                categoria.slug === "armado" && (
+                  <ul class="detalle__armado-lista">
+                    {
+                      destacadosEnOferta.map(({ icono, etiqueta }) => (
+                        <li>
+                          <Icono nombre={icono} />
+                          {etiqueta}
+                        </li>
+                      ))
+                    }
+                  </ul>
+                )
+              }
+
+              <ul class="detalle__garantias">
+                {
+                  garantias.map(({ icono, titulo, texto }) => (
+                    <li>
+                      <Icono nombre={icono} />
+                      <div>
+                        <strong>{titulo}</strong>
+                        <span>{texto}</span>
+                      </div>
+                    </li>
+                  ))
+                }
+              </ul>
+            </>
+          ) : (
+            <div class="detalle__sin-precio">
+              <p>
+                Este es un servicio a medida. Dejanos tu consulta en la
+                sección de contacto y te preparamos un presupuesto
+                personalizado.
+              </p>
+              <a class="boton" href="/nosotros#contacto">
+                Pedir presupuesto
+              </a>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div class="detalle-info-grid">
+        <div class="detalle-info">
+          <h3 class="detalle-info__titulo">Descripción</h3>
+          <p>{extra.descripcion}</p>
+        </div>
+
+        {extra.especificaciones.length > 0 && (
+          <div class="detalle-info">
+            <h3 class="detalle-info__titulo">Especificaciones</h3>
+            <ul class="detalle-info__especificaciones">
+              {
+                extra.especificaciones.map(({ etiqueta, valor }) => (
+                  <li>
+                    <span>{etiqueta}</span>
+                    <strong>{valor}</strong>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        )}
+      </div>
+
+      {
+        relacionados.length > 0 && (
+          <div class="detalle__relacionados">
+            <h2 class="titulo-seccion">También te puede <span>interesar</span></h2>
+            <div class="producto-grid">
+              {
+                relacionados.map((relacionado) => (
+                  <ProductCard
+                    {...relacionado}
+                    enlace={`/productos/${relacionado.categoria}/${relacionado.id}`}
+                  />
+                ))
+              }
+            </div>
+          </div>
+        )
+      }
+    </div>
+  </section>
+</Base>

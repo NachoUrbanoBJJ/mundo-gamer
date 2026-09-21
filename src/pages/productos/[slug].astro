@@ -1,0 +1,48 @@
+---
+import Base from "../../layouts/Base.astro";
+import ProductCard from "../../components/ProductCard.astro";
+import {
+  categorias,
+  productosDeCategoria,
+} from "../../data/catalogo.js";
+
+export function getStaticPaths() {
+  return categorias.map((categoria) => ({
+    params: { slug: categoria.slug },
+    props: { categoria },
+  }));
+}
+
+const { categoria } = Astro.props;
+const productos = productosDeCategoria(categoria.slug);
+---
+
+<Base
+  title={`${categoria.nombre} | Mundo Gamer`}
+  description={categoria.descripcion}
+  currentRoute="/productos"
+>
+  <section class="seccion">
+    <div class="contenedor">
+      <h2 class="titulo-seccion">{categoria.nombre}</h2>
+      <p class="subtitulo-seccion">{categoria.descripcion}</p>
+
+      {
+        productos.length > 0 ? (
+          <div class="producto-grid">
+            {
+              productos.map((producto) => (
+                <ProductCard
+                  {...producto}
+                  enlace={`/productos/${producto.categoria}/${producto.id}`}
+                />
+              ))
+            }
+          </div>
+        ) : (
+          <p class="texto-centrado">Próximamente más productos en esta categoría.</p>
+        )
+      }
+    </div>
+  </section>
+</Base>

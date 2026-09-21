@@ -1,0 +1,219 @@
+@use "variables" as *;
+@use "mixins" as *;
+
+.redes-lista {
+  display: flex;
+  justify-content: center;
+  gap: 1.75rem;
+  flex-wrap: wrap;
+
+  a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: $color-texto;
+    font-size: 0.85rem;
+    font-weight: 600;
+
+    &:hover {
+      color: $color-primario-oscuro;
+      text-decoration: none;
+    }
+  }
+
+  svg {
+    width: 52px;
+    height: 52px;
+    padding: 12px;
+    border-radius: 50%;
+    background-color: $color-superficie;
+    border: 1px solid $color-borde;
+    box-shadow: $sombra;
+    color: $color-texto-suave;
+    transition: transform 0.2s ease, color 0.2s ease;
+  }
+
+  a:hover svg {
+    transform: scale(1.1);
+    color: $color-primario-oscuro;
+  }
+}
+
+.nosotros-intro {
+  text-align: center;
+
+  &__titulo {
+    display: inline-block;
+    padding: 0.7rem 1.6rem;
+    border-radius: $radio-pequeno;
+    background-color: $color-boton;
+    color: $color-nav-texto;
+    font-size: clamp(1.4rem, 3vw, 1.8rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: box-shadow 0.2s ease-in-out, transform 0.15s ease-in-out;
+    @include borde-rgb;
+
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 12px rgba(255, 0, 76, 0.45), 0 0 28px rgba(0, 194, 255, 0.3);
+    }
+  }
+
+  &__quienes {
+    max-width: 60ch;
+    margin: 1.25rem auto 0;
+    color: $color-texto;
+    font-size: 1.05rem;
+  }
+
+  &__historia {
+    max-width: 60ch;
+    margin: 0 auto;
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition: grid-template-rows 0.6s ease, opacity 0.5s ease;
+  }
+
+  &__historia-inner {
+    overflow: hidden;
+
+    p {
+      margin: 0;
+      color: $color-texto-suave;
+    }
+
+    p + p {
+      margin-top: 0.75rem;
+    }
+  }
+
+  &.is-abierto &__historia {
+    grid-template-rows: 1fr;
+    opacity: 1;
+    margin-top: 1.5rem;
+  }
+}
+
+.nosotros-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.mapa-card {
+  @include tarjeta;
+  overflow: hidden;
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+
+  &__titulo {
+    margin: 0 0 1rem;
+    text-align: center;
+  }
+
+  &__mapa {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border: 1px solid $color-borde;
+    border-radius: $radio-pequeno;
+    background-color: $color-superficie-2;
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+  }
+}
+
+.envio-promedio {
+  @include tarjeta;
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+
+  &__cabecera {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  &__icono {
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    width: 52px;
+    height: 52px;
+    padding: 10px;
+    border-radius: $radio-pequeno;
+    background-color: $color-primario-claro;
+    color: $color-primario-oscuro;
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &__etiqueta {
+    display: block;
+    color: $color-texto-suave;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  &__monto {
+    display: block;
+    font-size: 2rem;
+    font-weight: 800;
+    color: $color-primario-oscuro;
+  }
+
+  &__lista {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    margin: 0;
+
+    @include respond-to(md) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  &__opcion {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.6rem 0.75rem;
+    background-color: $color-superficie-2;
+    border: 1px solid $color-borde;
+    border-radius: $radio-pequeno;
+    font-size: 0.9rem;
+
+    span {
+      color: $color-texto-suave;
+    }
+
+    strong {
+      color: $color-texto;
+    }
+  }
+}
+
+.nosotros-contacto {
+  margin-top: 3rem;
+}
+
+.formulario-card {
+  max-width: 720px;
+  margin-inline: auto;
+}

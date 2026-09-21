@@ -1,0 +1,90 @@
+@use "variables" as *;
+
+@mixin contenedor {
+  width: 100%;
+  max-width: $contenedor-max;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == sm {
+    @media (min-width: $bp-sm) {
+      @content;
+    }
+  } @else if $breakpoint == md {
+    @media (min-width: $bp-md) {
+      @content;
+    }
+  } @else if $breakpoint == lg {
+    @media (min-width: $bp-lg) {
+      @content;
+    }
+  }
+}
+
+@mixin tarjeta {
+  background-color: $color-superficie;
+  border: 1px solid $color-borde;
+  border-radius: $radio;
+  box-shadow: $sombra;
+}
+
+@keyframes rgb-giro {
+  to {
+    filter: hue-rotate(360deg);
+  }
+}
+
+@mixin borde-rgb {
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 2px;
+    background: $degradado-rgb;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    filter: hue-rotate(0deg);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    pointer-events: none;
+  }
+
+  &:hover::before {
+    opacity: 1;
+    animation: rgb-giro 1.6s linear infinite;
+  }
+}
+
+@mixin boton($texto: #fff) {
+  display: inline-block;
+  position: relative;
+  padding: 0.7rem 1.4rem;
+  border: none;
+  border-radius: $radio-pequeno;
+  background-color: $color-boton;
+  color: $texto;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, transform 0.15s ease-in-out,
+    box-shadow 0.2s ease-in-out;
+  @include borde-rgb;
+
+  &:hover {
+    background-color: $color-boton-suave;
+    transform: translateY(-1px);
+    box-shadow: 0 0 12px rgba(255, 0, 76, 0.45), 0 0 28px rgba(0, 194, 255, 0.3);
+  }
+
+  &:focus-visible {
+    outline: 3px solid rgba($color-celeste, 0.5);
+    outline-offset: 2px;
+  }
+}
