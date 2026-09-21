@@ -4,7 +4,7 @@ E-commerce de hardware y tecnología gaming construido como **demostración de c
 
 Todos los datos, precios, imágenes y medios de contacto son **ficticios a propósito**: el proyecto es una muestra de lo que se puede construir, no una tienda real.
 
-Repo original del curso: [repo-clases-de-coderhouse](https://github.com/NachoUrbanoBJJ/repo-clases-de-coderhouse). El estado anterior (sitio en HTML a mano) está etiquetado como `v0-antes`.
+Repo del proyecto: [mundo-gamer](https://github.com/NachoUrbanoBJJ/mundo-gamer). El estado anterior (sitio en HTML a mano) está etiquetado como `v0-antes`.
 
 ## 🚀 Comandos
 
