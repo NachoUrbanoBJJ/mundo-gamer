@@ -112,6 +112,15 @@ Las fotos fuente viven en `img/`. Para regenerar los `banner-*.jpg` (1920×576, 
 | Accesibilidad          | `lang="en"`, inputs sin label          | `lang="es"`, labels, ARIA, foco por teclado |
 | SEO/Perf               | Metas incompletas                      | Metas por página, OG, JSON-LD, sitemap/robots, LCP optimizado |
 
+### Vistazo rápido
+
+| Antes — v0 (HTML a mano)      | Después — v2 (Astro + Sass)          |
+| :---------------------------- | :----------------------------------- |
+| ![Antes](img/portafolio-antes.png) | ![Después](img/portafolio-despues.png) |
+
+- Código viejo: etiqueta [`v0-antes`](https://github.com/NachoUrbanoBJJ/mundo-gamer/tree/v0-antes)
+- Sitio en vivo: [mundo-gamer.vercel.app](https://mundo-gamer-1.vercel.app/)
+
 ## 🚢 Deploy
 
 Build estático: `npm run build` → carpeta `dist/` (funciona en Vercel, Netlify, Cloudflare Pages o GH Pages).
