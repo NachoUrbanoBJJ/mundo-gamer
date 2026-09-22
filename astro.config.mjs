@@ -3,5 +3,5 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://mundo-gamer.vercel.app",
+  site: "https://mundo-gamer-1.vercel.app",
 });
