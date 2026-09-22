@@ -25,3 +25,9 @@ pnpm-debug.log*
 
 # editors
 .vscode/
+
+# vercel cli
+.vercel/
+
+.vercel
+.env*
